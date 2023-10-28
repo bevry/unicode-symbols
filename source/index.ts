@@ -1,5 +1,22 @@
-import isUnicodeSupported from 'is-unicode-supported';
+// https://github.com/sindresorhus/is-unicode-supported/blob/506f27260df3636555714bf10ed40ab9e6a6c96e/index.js
+import { platform, env } from 'process'
+export function isUnicodeSupported() {
+	if (platform !== 'win32') {
+		return env.TERM !== 'linux' // Linux console (kernel)
+	}
+	return (
+		Boolean(env.WT_SESSION) || // Windows Terminal
+		Boolean(env.TERMINUS_SUBLIME) || // Terminus (<0.2.27)
+		env.ConEmuTask === '{cmd::Cmder}' || // ConEmu and cmder
+		env.TERM_PROGRAM === 'Terminus-Sublime' ||
+		env.TERM_PROGRAM === 'vscode' ||
+		env.TERM === 'xterm-256color' ||
+		env.TERM === 'alacritty' ||
+		env.TERMINAL_EMULATOR === 'JetBrains-JediTerm'
+	)
+}
 
+// https://github.com/bevry/figures/blob/b10ba989a9dd359faf0f197e4081b144d2e72931/index.js
 const common = {
 	circleQuestionMark: '(?)',
 	questionMarkPrefix: '(?)',
@@ -195,7 +212,7 @@ const common = {
 	lineCross: '╳',
 	lineBackslash: '╲',
 	lineSlash: '╱',
-};
+}
 
 const specialMainSymbols = {
 	tick: '✔',
@@ -232,7 +249,7 @@ const specialMainSymbols = {
 	oneSeventh: '⅐',
 	oneNinth: '⅑',
 	oneTenth: '⅒',
-};
+}
 
 const specialFallbackSymbols = {
 	tick: '√',
@@ -269,26 +286,26 @@ const specialFallbackSymbols = {
 	oneSeventh: '1/7',
 	oneNinth: '1/9',
 	oneTenth: '1/10',
-};
+}
 
-export const mainSymbols = {...common, ...specialMainSymbols};
-export const fallbackSymbols = {...common, ...specialFallbackSymbols};
+export const mainSymbols = { ...common, ...specialMainSymbols }
+export const fallbackSymbols = { ...common, ...specialFallbackSymbols }
 
-const shouldUseMain = isUnicodeSupported();
-const figures = shouldUseMain ? mainSymbols : fallbackSymbols;
-export default figures;
+const shouldUseMain = isUnicodeSupported()
+const figures = shouldUseMain ? mainSymbols : fallbackSymbols
+export default figures
 
-const replacements = Object.entries(specialMainSymbols);
+const replacements = Object.entries(specialMainSymbols)
 
 // On terminals which do not support Unicode symbols, substitute them to other symbols
-export const replaceSymbols = string => {
+export const replaceSymbols = (string: string) => {
 	if (shouldUseMain) {
-		return string;
+		return string
 	}
 
 	for (const [key, mainSymbol] of replacements) {
-		string = string.replaceAll(mainSymbol, fallbackSymbols[key]);
+		string = string.replaceAll(mainSymbol, (fallbackSymbols as any)[key])
 	}
 
-	return string;
-};
+	return string
+}
