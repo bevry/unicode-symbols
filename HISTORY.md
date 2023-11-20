@@ -1,5 +1,9 @@
 # History
 
+## v7.0.0 2023 November 20
+
+-   Renamed to `unicode-symbols` and just export the unicode symbols.
+
 ## v6.1.0 2023 November 1
 
 -   Forked to implement Bevry's best practices and maintain widespread compatibility.

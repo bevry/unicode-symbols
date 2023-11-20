@@ -1,311 +1,229 @@
-// https://github.com/sindresorhus/is-unicode-supported/blob/506f27260df3636555714bf10ed40ab9e6a6c96e/index.js
-import { platform, env } from 'process'
-export function isUnicodeSupported() {
-	if (platform !== 'win32') {
-		return env.TERM !== 'linux' // Linux console (kernel)
-	}
-	return (
-		Boolean(env.WT_SESSION) || // Windows Terminal
-		Boolean(env.TERMINUS_SUBLIME) || // Terminus (<0.2.27)
-		env.ConEmuTask === '{cmd::Cmder}' || // ConEmu and cmder
-		env.TERM_PROGRAM === 'Terminus-Sublime' ||
-		env.TERM_PROGRAM === 'vscode' ||
-		env.TERM === 'xterm-256color' ||
-		env.TERM === 'alacritty' ||
-		env.TERMINAL_EMULATOR === 'JetBrains-JediTerm'
-	)
-}
-
 // https://github.com/bevry/figures/blob/b10ba989a9dd359faf0f197e4081b144d2e72931/index.js
-const common = {
-	circleQuestionMark: '(?)',
-	questionMarkPrefix: '(?)',
-	square: '█',
-	squareDarkShade: '▓',
-	squareMediumShade: '▒',
-	squareLightShade: '░',
-	squareTop: '▀',
-	squareBottom: '▄',
-	squareLeft: '▌',
-	squareRight: '▐',
-	squareCenter: '■',
-	bullet: '●',
-	dot: '․',
-	ellipsis: '…',
-	pointerSmall: '›',
-	triangleUp: '▲',
-	triangleUpSmall: '▴',
-	triangleDown: '▼',
-	triangleDownSmall: '▾',
-	triangleLeftSmall: '◂',
-	triangleRightSmall: '▸',
-	home: '⌂',
-	heart: '♥',
-	musicNote: '♪',
-	musicNoteBeamed: '♫',
-	arrowUp: '↑',
-	arrowDown: '↓',
-	arrowLeft: '←',
-	arrowRight: '→',
-	arrowLeftRight: '↔',
-	arrowUpDown: '↕',
-	almostEqual: '≈',
-	notEqual: '≠',
-	lessOrEqual: '≤',
-	greaterOrEqual: '≥',
-	identical: '≡',
-	infinity: '∞',
-	subscriptZero: '₀',
-	subscriptOne: '₁',
-	subscriptTwo: '₂',
-	subscriptThree: '₃',
-	subscriptFour: '₄',
-	subscriptFive: '₅',
-	subscriptSix: '₆',
-	subscriptSeven: '₇',
-	subscriptEight: '₈',
-	subscriptNine: '₉',
-	oneHalf: '½',
-	oneThird: '⅓',
-	oneQuarter: '¼',
-	oneFifth: '⅕',
-	oneSixth: '⅙',
-	oneEighth: '⅛',
-	twoThirds: '⅔',
-	twoFifths: '⅖',
-	threeQuarters: '¾',
-	threeFifths: '⅗',
-	threeEighths: '⅜',
-	fourFifths: '⅘',
-	fiveSixths: '⅚',
-	fiveEighths: '⅝',
-	sevenEighths: '⅞',
-	line: '─',
-	lineBold: '━',
-	lineDouble: '═',
-	lineDashed0: '┄',
-	lineDashed1: '┅',
-	lineDashed2: '┈',
-	lineDashed3: '┉',
-	lineDashed4: '╌',
-	lineDashed5: '╍',
-	lineDashed6: '╴',
-	lineDashed7: '╶',
-	lineDashed8: '╸',
-	lineDashed9: '╺',
-	lineDashed10: '╼',
-	lineDashed11: '╾',
-	lineDashed12: '−',
-	lineDashed13: '–',
-	lineDashed14: '‐',
-	lineDashed15: '⁃',
-	lineVertical: '│',
-	lineVerticalBold: '┃',
-	lineVerticalDouble: '║',
-	lineVerticalDashed0: '┆',
-	lineVerticalDashed1: '┇',
-	lineVerticalDashed2: '┊',
-	lineVerticalDashed3: '┋',
-	lineVerticalDashed4: '╎',
-	lineVerticalDashed5: '╏',
-	lineVerticalDashed6: '╵',
-	lineVerticalDashed7: '╷',
-	lineVerticalDashed8: '╹',
-	lineVerticalDashed9: '╻',
-	lineVerticalDashed10: '╽',
-	lineVerticalDashed11: '╿',
-	lineDownLeft: '┐',
-	lineDownLeftArc: '╮',
-	lineDownBoldLeftBold: '┓',
-	lineDownBoldLeft: '┒',
-	lineDownLeftBold: '┑',
-	lineDownDoubleLeftDouble: '╗',
-	lineDownDoubleLeft: '╖',
-	lineDownLeftDouble: '╕',
-	lineDownRight: '┌',
-	lineDownRightArc: '╭',
-	lineDownBoldRightBold: '┏',
-	lineDownBoldRight: '┎',
-	lineDownRightBold: '┍',
-	lineDownDoubleRightDouble: '╔',
-	lineDownDoubleRight: '╓',
-	lineDownRightDouble: '╒',
-	lineUpLeft: '┘',
-	lineUpLeftArc: '╯',
-	lineUpBoldLeftBold: '┛',
-	lineUpBoldLeft: '┚',
-	lineUpLeftBold: '┙',
-	lineUpDoubleLeftDouble: '╝',
-	lineUpDoubleLeft: '╜',
-	lineUpLeftDouble: '╛',
-	lineUpRight: '└',
-	lineUpRightArc: '╰',
-	lineUpBoldRightBold: '┗',
-	lineUpBoldRight: '┖',
-	lineUpRightBold: '┕',
-	lineUpDoubleRightDouble: '╚',
-	lineUpDoubleRight: '╙',
-	lineUpRightDouble: '╘',
-	lineUpDownLeft: '┤',
-	lineUpBoldDownBoldLeftBold: '┫',
-	lineUpBoldDownBoldLeft: '┨',
-	lineUpDownLeftBold: '┥',
-	lineUpBoldDownLeftBold: '┩',
-	lineUpDownBoldLeftBold: '┪',
-	lineUpDownBoldLeft: '┧',
-	lineUpBoldDownLeft: '┦',
-	lineUpDoubleDownDoubleLeftDouble: '╣',
-	lineUpDoubleDownDoubleLeft: '╢',
-	lineUpDownLeftDouble: '╡',
-	lineUpDownRight: '├',
-	lineUpBoldDownBoldRightBold: '┣',
-	lineUpBoldDownBoldRight: '┠',
-	lineUpDownRightBold: '┝',
-	lineUpBoldDownRightBold: '┡',
-	lineUpDownBoldRightBold: '┢',
-	lineUpDownBoldRight: '┟',
-	lineUpBoldDownRight: '┞',
-	lineUpDoubleDownDoubleRightDouble: '╠',
-	lineUpDoubleDownDoubleRight: '╟',
-	lineUpDownRightDouble: '╞',
-	lineDownLeftRight: '┬',
-	lineDownBoldLeftBoldRightBold: '┳',
-	lineDownLeftBoldRightBold: '┯',
-	lineDownBoldLeftRight: '┰',
-	lineDownBoldLeftBoldRight: '┱',
-	lineDownBoldLeftRightBold: '┲',
-	lineDownLeftRightBold: '┮',
-	lineDownLeftBoldRight: '┭',
-	lineDownDoubleLeftDoubleRightDouble: '╦',
-	lineDownDoubleLeftRight: '╥',
-	lineDownLeftDoubleRightDouble: '╤',
-	lineUpLeftRight: '┴',
-	lineUpBoldLeftBoldRightBold: '┻',
-	lineUpLeftBoldRightBold: '┷',
-	lineUpBoldLeftRight: '┸',
-	lineUpBoldLeftBoldRight: '┹',
-	lineUpBoldLeftRightBold: '┺',
-	lineUpLeftRightBold: '┶',
-	lineUpLeftBoldRight: '┵',
-	lineUpDoubleLeftDoubleRightDouble: '╩',
-	lineUpDoubleLeftRight: '╨',
-	lineUpLeftDoubleRightDouble: '╧',
-	lineUpDownLeftRight: '┼',
-	lineUpBoldDownBoldLeftBoldRightBold: '╋',
-	lineUpDownBoldLeftBoldRightBold: '╈',
-	lineUpBoldDownLeftBoldRightBold: '╇',
-	lineUpBoldDownBoldLeftRightBold: '╊',
-	lineUpBoldDownBoldLeftBoldRight: '╉',
-	lineUpBoldDownLeftRight: '╀',
-	lineUpDownBoldLeftRight: '╁',
-	lineUpDownLeftBoldRight: '┽',
-	lineUpDownLeftRightBold: '┾',
-	lineUpBoldDownBoldLeftRight: '╂',
-	lineUpDownLeftBoldRightBold: '┿',
-	lineUpBoldDownLeftBoldRight: '╃',
-	lineUpBoldDownLeftRightBold: '╄',
-	lineUpDownBoldLeftBoldRight: '╅',
-	lineUpDownBoldLeftRightBold: '╆',
-	lineUpDoubleDownDoubleLeftDoubleRightDouble: '╬',
-	lineUpDoubleDownDoubleLeftRight: '╫',
-	lineUpDownLeftDoubleRightDouble: '╪',
-	lineCross: '╳',
-	lineBackslash: '╲',
-	lineSlash: '╱',
-}
-
-const specialMainSymbols = {
-	tick: '✔',
-	info: 'ℹ',
-	warning: '⚠',
-	cross: '✘',
-	squareSmall: '◻',
-	squareSmallFilled: '◼',
-	circle: '◯',
-	circleFilled: '◉',
-	circleDotted: '◌',
-	circleDouble: '◎',
-	circleCircle: 'ⓞ',
-	circleCross: 'ⓧ',
-	circlePipe: 'Ⓘ',
-	radioOn: '◉',
-	radioOff: '◯',
-	checkboxOn: '☒',
-	checkboxOff: '☐',
-	checkboxCircleOn: 'ⓧ',
-	checkboxCircleOff: 'Ⓘ',
-	pointer: '❯',
-	triangleUpOutline: '△',
-	triangleLeft: '◀',
-	triangleRight: '▶',
-	lozenge: '◆',
-	lozengeOutline: '◇',
-	hamburger: '☰',
-	smiley: '㋡',
-	mustache: '෴',
-	star: '★',
-	play: '▶',
-	nodejs: '⬢',
-	oneSeventh: '⅐',
-	oneNinth: '⅑',
-	oneTenth: '⅒',
-}
-
-const specialFallbackSymbols = {
-	tick: '√',
-	info: 'i',
-	warning: '‼',
-	cross: '×',
-	squareSmall: '□',
-	squareSmallFilled: '■',
-	circle: '( )',
-	circleFilled: '(*)',
-	circleDotted: '( )',
-	circleDouble: '( )',
-	circleCircle: '(○)',
-	circleCross: '(×)',
-	circlePipe: '(│)',
-	radioOn: '(*)',
-	radioOff: '( )',
-	checkboxOn: '[×]',
-	checkboxOff: '[ ]',
-	checkboxCircleOn: '(×)',
-	checkboxCircleOff: '( )',
-	pointer: '>',
-	triangleUpOutline: '∆',
-	triangleLeft: '◄',
-	triangleRight: '►',
-	lozenge: '♦',
-	lozengeOutline: '◊',
-	hamburger: '≡',
-	smiley: '☺',
-	mustache: '┌─┐',
-	star: '✶',
-	play: '►',
-	nodejs: '♦',
-	oneSeventh: '1/7',
-	oneNinth: '1/9',
-	oneTenth: '1/10',
-}
-
-export const mainSymbols = { ...common, ...specialMainSymbols }
-export const fallbackSymbols = { ...common, ...specialFallbackSymbols }
-
-const shouldUseMain = isUnicodeSupported()
-const figures = shouldUseMain ? mainSymbols : fallbackSymbols
-export default figures
-
-const replacements = Object.entries(specialMainSymbols)
-
-// On terminals which do not support Unicode symbols, substitute them to other symbols
-export const replaceSymbols = (string: string) => {
-	if (shouldUseMain) {
-		return string
-	}
-
-	for (const [key, mainSymbol] of replacements) {
-		string = string.replaceAll(mainSymbol, (fallbackSymbols as any)[key])
-	}
-
-	return string
-}
+export const circleQuestionMark = '(?)'
+export const questionMarkPrefix = '(?)'
+export const square = '█'
+export const squareDarkShade = '▓'
+export const squareMediumShade = '▒'
+export const squareLightShade = '░'
+export const squareTop = '▀'
+export const squareBottom = '▄'
+export const squareLeft = '▌'
+export const squareRight = '▐'
+export const squareCenter = '■'
+export const bullet = '●'
+export const dot = '․'
+export const ellipsis = '…'
+export const pointerSmall = '›'
+export const triangleUp = '▲'
+export const triangleUpSmall = '▴'
+export const triangleDown = '▼'
+export const triangleDownSmall = '▾'
+export const triangleLeftSmall = '◂'
+export const triangleRightSmall = '▸'
+export const home = '⌂'
+export const heart = '♥'
+export const musicNote = '♪'
+export const musicNoteBeamed = '♫'
+export const arrowUp = '↑'
+export const arrowDown = '↓'
+export const arrowLeft = '←'
+export const arrowRight = '→'
+export const arrowLeftRight = '↔'
+export const arrowUpDown = '↕'
+export const almostEqual = '≈'
+export const notEqual = '≠'
+export const lessOrEqual = '≤'
+export const greaterOrEqual = '≥'
+export const identical = '≡'
+export const infinity = '∞'
+export const subscriptZero = '₀'
+export const subscriptOne = '₁'
+export const subscriptTwo = '₂'
+export const subscriptThree = '₃'
+export const subscriptFour = '₄'
+export const subscriptFive = '₅'
+export const subscriptSix = '₆'
+export const subscriptSeven = '₇'
+export const subscriptEight = '₈'
+export const subscriptNine = '₉'
+export const oneHalf = '½'
+export const oneThird = '⅓'
+export const oneQuarter = '¼'
+export const oneFifth = '⅕'
+export const oneSixth = '⅙'
+export const oneEighth = '⅛'
+export const twoThirds = '⅔'
+export const twoFifths = '⅖'
+export const threeQuarters = '¾'
+export const threeFifths = '⅗'
+export const threeEighths = '⅜'
+export const fourFifths = '⅘'
+export const fiveSixths = '⅚'
+export const fiveEighths = '⅝'
+export const sevenEighths = '⅞'
+export const line = '─'
+export const lineBold = '━'
+export const lineDouble = '═'
+export const lineDashed0 = '┄'
+export const lineDashed1 = '┅'
+export const lineDashed2 = '┈'
+export const lineDashed3 = '┉'
+export const lineDashed4 = '╌'
+export const lineDashed5 = '╍'
+export const lineDashed6 = '╴'
+export const lineDashed7 = '╶'
+export const lineDashed8 = '╸'
+export const lineDashed9 = '╺'
+export const lineDashed10 = '╼'
+export const lineDashed11 = '╾'
+export const lineDashed12 = '−'
+export const lineDashed13 = '–'
+export const lineDashed14 = '‐'
+export const lineDashed15 = '⁃'
+export const lineVertical = '│'
+export const lineVerticalBold = '┃'
+export const lineVerticalDouble = '║'
+export const lineVerticalDashed0 = '┆'
+export const lineVerticalDashed1 = '┇'
+export const lineVerticalDashed2 = '┊'
+export const lineVerticalDashed3 = '┋'
+export const lineVerticalDashed4 = '╎'
+export const lineVerticalDashed5 = '╏'
+export const lineVerticalDashed6 = '╵'
+export const lineVerticalDashed7 = '╷'
+export const lineVerticalDashed8 = '╹'
+export const lineVerticalDashed9 = '╻'
+export const lineVerticalDashed10 = '╽'
+export const lineVerticalDashed11 = '╿'
+export const lineDownLeft = '┐'
+export const lineDownLeftArc = '╮'
+export const lineDownBoldLeftBold = '┓'
+export const lineDownBoldLeft = '┒'
+export const lineDownLeftBold = '┑'
+export const lineDownDoubleLeftDouble = '╗'
+export const lineDownDoubleLeft = '╖'
+export const lineDownLeftDouble = '╕'
+export const lineDownRight = '┌'
+export const lineDownRightArc = '╭'
+export const lineDownBoldRightBold = '┏'
+export const lineDownBoldRight = '┎'
+export const lineDownRightBold = '┍'
+export const lineDownDoubleRightDouble = '╔'
+export const lineDownDoubleRight = '╓'
+export const lineDownRightDouble = '╒'
+export const lineUpLeft = '┘'
+export const lineUpLeftArc = '╯'
+export const lineUpBoldLeftBold = '┛'
+export const lineUpBoldLeft = '┚'
+export const lineUpLeftBold = '┙'
+export const lineUpDoubleLeftDouble = '╝'
+export const lineUpDoubleLeft = '╜'
+export const lineUpLeftDouble = '╛'
+export const lineUpRight = '└'
+export const lineUpRightArc = '╰'
+export const lineUpBoldRightBold = '┗'
+export const lineUpBoldRight = '┖'
+export const lineUpRightBold = '┕'
+export const lineUpDoubleRightDouble = '╚'
+export const lineUpDoubleRight = '╙'
+export const lineUpRightDouble = '╘'
+export const lineUpDownLeft = '┤'
+export const lineUpBoldDownBoldLeftBold = '┫'
+export const lineUpBoldDownBoldLeft = '┨'
+export const lineUpDownLeftBold = '┥'
+export const lineUpBoldDownLeftBold = '┩'
+export const lineUpDownBoldLeftBold = '┪'
+export const lineUpDownBoldLeft = '┧'
+export const lineUpBoldDownLeft = '┦'
+export const lineUpDoubleDownDoubleLeftDouble = '╣'
+export const lineUpDoubleDownDoubleLeft = '╢'
+export const lineUpDownLeftDouble = '╡'
+export const lineUpDownRight = '├'
+export const lineUpBoldDownBoldRightBold = '┣'
+export const lineUpBoldDownBoldRight = '┠'
+export const lineUpDownRightBold = '┝'
+export const lineUpBoldDownRightBold = '┡'
+export const lineUpDownBoldRightBold = '┢'
+export const lineUpDownBoldRight = '┟'
+export const lineUpBoldDownRight = '┞'
+export const lineUpDoubleDownDoubleRightDouble = '╠'
+export const lineUpDoubleDownDoubleRight = '╟'
+export const lineUpDownRightDouble = '╞'
+export const lineDownLeftRight = '┬'
+export const lineDownBoldLeftBoldRightBold = '┳'
+export const lineDownLeftBoldRightBold = '┯'
+export const lineDownBoldLeftRight = '┰'
+export const lineDownBoldLeftBoldRight = '┱'
+export const lineDownBoldLeftRightBold = '┲'
+export const lineDownLeftRightBold = '┮'
+export const lineDownLeftBoldRight = '┭'
+export const lineDownDoubleLeftDoubleRightDouble = '╦'
+export const lineDownDoubleLeftRight = '╥'
+export const lineDownLeftDoubleRightDouble = '╤'
+export const lineUpLeftRight = '┴'
+export const lineUpBoldLeftBoldRightBold = '┻'
+export const lineUpLeftBoldRightBold = '┷'
+export const lineUpBoldLeftRight = '┸'
+export const lineUpBoldLeftBoldRight = '┹'
+export const lineUpBoldLeftRightBold = '┺'
+export const lineUpLeftRightBold = '┶'
+export const lineUpLeftBoldRight = '┵'
+export const lineUpDoubleLeftDoubleRightDouble = '╩'
+export const lineUpDoubleLeftRight = '╨'
+export const lineUpLeftDoubleRightDouble = '╧'
+export const lineUpDownLeftRight = '┼'
+export const lineUpBoldDownBoldLeftBoldRightBold = '╋'
+export const lineUpDownBoldLeftBoldRightBold = '╈'
+export const lineUpBoldDownLeftBoldRightBold = '╇'
+export const lineUpBoldDownBoldLeftRightBold = '╊'
+export const lineUpBoldDownBoldLeftBoldRight = '╉'
+export const lineUpBoldDownLeftRight = '╀'
+export const lineUpDownBoldLeftRight = '╁'
+export const lineUpDownLeftBoldRight = '┽'
+export const lineUpDownLeftRightBold = '┾'
+export const lineUpBoldDownBoldLeftRight = '╂'
+export const lineUpDownLeftBoldRightBold = '┿'
+export const lineUpBoldDownLeftBoldRight = '╃'
+export const lineUpBoldDownLeftRightBold = '╄'
+export const lineUpDownBoldLeftBoldRight = '╅'
+export const lineUpDownBoldLeftRightBold = '╆'
+export const lineUpDoubleDownDoubleLeftDoubleRightDouble = '╬'
+export const lineUpDoubleDownDoubleLeftRight = '╫'
+export const lineUpDownLeftDoubleRightDouble = '╪'
+export const lineCross = '╳'
+export const lineBackslash = '╲'
+export const lineSlash = '╱'
+export const tick = '✔'
+export const info = 'ℹ'
+export const warning = '⚠'
+export const cross = '✘'
+export const squareSmall = '◻'
+export const squareSmallFilled = '◼'
+export const circle = '◯'
+export const circleFilled = '◉'
+export const circleDotted = '◌'
+export const circleDouble = '◎'
+export const circleCircle = 'ⓞ'
+export const circleCross = 'ⓧ'
+export const circlePipe = 'Ⓘ'
+export const radioOn = '◉'
+export const radioOff = '◯'
+export const checkboxOn = '☒'
+export const checkboxOff = '☐'
+export const checkboxCircleOn = 'ⓧ'
+export const checkboxCircleOff = 'Ⓘ'
+export const pointer = '❯'
+export const triangleUpOutline = '△'
+export const triangleLeft = '◀'
+export const triangleRight = '▶'
+export const lozenge = '◆'
+export const lozengeOutline = '◇'
+export const hamburger = '☰'
+export const smiley = '㋡'
+export const mustache = '෴'
+export const star = '★'
+export const play = '▶'
+export const nodejs = '⬢'
+export const oneSeventh = '⅐'
+export const oneNinth = '⅑'
+export const oneTenth = '⅒'
