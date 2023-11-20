@@ -1,5 +1,11 @@
 # History
 
+## v7.0.1 2023 November 20
+
+-   Renamed to `unicode-symbols` and just export the unicode symbols.
+-   Updated dependencies, [base files](https://github.com/bevry/base), and [editions](https://editions.bevry.me) using [boundation](https://github.com/bevry/boundation)
+-   Minimum required Node.js version changed from `node: >=8` to `node: >=4` adapting to ecosystem changes
+
 ## v6.1.0 2023 November 1
 
 -   Forked to implement Bevry's best practices and maintain widespread compatibility.

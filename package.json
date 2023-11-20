@@ -1,27 +1,28 @@
 {
-  "name": "@bevry/figures",
-  "version": "6.1.0",
-  "description": "Unicode symbols with fallbacks for older terminals. Forked to implement Bevry's best practices and maintain widespread compatibility.",
-  "homepage": "https://github.com/bevry/figures",
+  "name": "unicode-symbols",
+  "version": "7.0.1",
+  "description": "Unicode Symbols",
+  "homepage": "https://github.com/bevry/unicode-symbols",
   "license": "Artistic-2.0",
-  "author": "2023+ Benjamin Lupton <b@lupton.cc> (https://balupton.com)",
   "keywords": [
+    "browser",
     "characters",
     "cli",
     "cmd",
     "command-line",
     "es2022",
-    "export-default",
     "fallback",
     "figure",
     "figures",
+    "module",
     "node",
     "symbol",
     "symbols",
     "typed",
     "types",
     "typescript",
-    "unicode"
+    "unicode",
+    "unicode-symbols"
   ],
   "badges": {
     "list": [
@@ -32,18 +33,19 @@
       "githubsponsors",
       "thanksdev",
       "patreon",
-      "flattr",
       "liberapay",
       "buymeacoffee",
       "opencollective",
       "crypto",
       "paypal",
-      "wishlist"
+      "---",
+      "discord",
+      "twitch"
     ],
     "config": {
       "githubWorkflow": "bevry",
       "githubSponsorsUsername": "balupton",
-      "thanksdevGithubUsername": "balupton",
+      "thanksdevGithubUsername": "bevry",
       "buymeacoffeeUsername": "balupton",
       "cryptoURL": "https://bevry.me/crypto",
       "flattrUsername": "balupton",
@@ -52,25 +54,43 @@
       "patreonUsername": "bevry",
       "paypalURL": "https://bevry.me/paypal",
       "wishlistURL": "https://bevry.me/wishlist",
+      "discordServerID": "1147436445783560193",
+      "discordServerInvite": "nQuXddV7VP",
+      "twitchUsername": "balupton",
       "githubUsername": "bevry",
-      "githubRepository": "figures",
-      "githubSlug": "bevry/figures",
-      "npmPackageName": "figures"
+      "githubRepository": "unicode-symbols",
+      "githubSlug": "bevry/unicode-symbols",
+      "npmPackageName": "unicode-symbols"
     }
   },
   "funding": "https://bevry.me/fund",
+  "author": "2023+ Benjamin Lupton <b@lupton.cc> (https://balupton.com)",
   "maintainers": [
     "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)"
   ],
+  "contributors": [
+    "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)",
+    "Brandon Smith (https://github.com/brandon93s)",
+    "Christophe Hurpeau <christophe@hurpeau.com> (https://github.com/christophehurpeau)",
+    "Corey Farrell <git@cfware.com> (https://github.com/coreyfarrell)",
+    "Dimitri B. (https://github.com/BendingBender)",
+    "Jannis R <mail@jannisr.de> (https://github.com/derhuerst)",
+    "Kevin Goslar <kevin.goslar@gmail.com> (https://github.com/kevgo)",
+    "Richard Gibson (https://github.com/gibson042)",
+    "Richie Bendall <richiebendall@gmail.com> (https://github.com/Richienb)",
+    "Sam Verschueren (https://github.com/SamVerschueren)",
+    "Sindre Sorhus <sindresorhus@gmail.com> (https://github.com/sindresorhus)",
+    "ehmicky (https://github.com/ehmicky)"
+  ],
   "bugs": {
-    "url": "https://github.com/bevry/figures/issues"
+    "url": "https://github.com/bevry/unicode-symbols/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bevry/figures.git"
+    "url": "https://github.com/bevry/unicode-symbols.git"
   },
   "engines": {
-    "node": ">=8"
+    "node": ">=4"
   },
   "editions": [
     {
@@ -85,7 +105,21 @@
       "engines": false
     },
     {
-      "description": "TypeScript compiled against ES2022 for Node.js 8 || 10 || 12 || 14 || 16 || 18 || 20 || 21 with Require for modules",
+      "description": "TypeScript compiled against ES2022 for web browsers with Import for modules",
+      "directory": "edition-browsers",
+      "entry": "index.js",
+      "tags": [
+        "compiled",
+        "javascript",
+        "import"
+      ],
+      "engines": {
+        "node": false,
+        "browsers": "defaults"
+      }
+    },
+    {
+      "description": "TypeScript compiled against ES2022 for Node.js 4 || 6 || 8 || 10 || 12 || 14 || 16 || 18 || 20 || 21 with Require for modules",
       "directory": "edition-es2022",
       "entry": "index.js",
       "tags": [
@@ -95,7 +129,7 @@
         "require"
       ],
       "engines": {
-        "node": "8 || 10 || 12 || 14 || 16 || 18 || 20 || 21",
+        "node": "4 || 6 || 8 || 10 || 12 || 14 || 16 || 18 || 20 || 21",
         "browsers": false
       }
     },
@@ -122,39 +156,44 @@
     "node": {
       "import": "./edition-es2022-esm/index.js",
       "require": "./edition-es2022/index.js"
+    },
+    "browser": {
+      "import": "./edition-browsers/index.js"
     }
   },
+  "browser": "edition-browsers/index.js",
+  "module": "edition-browsers/index.js",
   "devDependencies": {
-    "@bevry/update-contributors": "^1.22.0",
-    "@types/node": "^20.8.10",
-    "@typescript-eslint/eslint-plugin": "^6.9.1",
-    "@typescript-eslint/parser": "^6.9.1",
-    "assert-helpers": "^8.4.0",
-    "eslint": "^8.52.0",
-    "eslint-config-bevry": "^3.28.0",
+    "@bevry/update-contributors": "^1.23.0",
+    "@types/node": "^20.9.2",
+    "@typescript-eslint/eslint-plugin": "^6.11.0",
+    "@typescript-eslint/parser": "^6.11.0",
+    "assert-helpers": "^11.4.0",
+    "eslint": "^8.54.0",
+    "eslint-config-bevry": "^5.0.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.1",
-    "kava": "3.2.0",
-    "make-deno-edition": "^1.3.0",
-    "prettier": "^3.0.3",
-    "projectz": "^2.23.0",
+    "kava": "^7.2.0",
+    "prettier": "^3.1.0",
+    "projectz": "^3.2.0",
     "surge": "^0.23.1",
     "typedoc": "^0.25.3",
     "typescript": "5.2.2",
-    "valid-directory": "^4.0.0"
+    "valid-directory": "^4.4.0",
+    "valid-module": "^2.3.0"
   },
   "scripts": {
-    "our:clean": "rm -Rf ./docs ./edition* ./es2015 ./es5 ./out ./.next",
-    "our:compile": "npm run our:compile:deno && npm run our:compile:edition-es2022 && npm run our:compile:edition-es2022-esm && npm run our:compile:types",
-    "our:compile:deno": "make-deno-edition --attempt",
-    "our:compile:edition-es2022": "tsc --module commonjs --target ES2022 --outDir ./edition-es2022 --project tsconfig.json && ( test ! -d edition-es2022/source || ( mv edition-es2022/source edition-temp && rm -Rf edition-es2022 && mv edition-temp edition-es2022 ) ) && printf '%s' '{\"type\": \"commonjs\"}' > edition-es2022/package.json",
-    "our:compile:edition-es2022-esm": "tsc --module ESNext --target ES2022 --outDir ./edition-es2022-esm --project tsconfig.json && ( test ! -d edition-es2022-esm/source || ( mv edition-es2022-esm/source edition-temp && rm -Rf edition-es2022-esm && mv edition-temp edition-es2022-esm ) ) && printf '%s' '{\"type\": \"module\"}' > edition-es2022-esm/package.json",
-    "our:compile:types": "tsc --project tsconfig.json --emitDeclarationOnly --declaration --declarationMap --declarationDir ./compiled-types && ( test ! -d compiled-types/source || ( mv compiled-types/source edition-temp && rm -Rf compiled-types && mv edition-temp compiled-types ) )",
+    "our:clean": "rm -rf ./docs ./edition* ./es2015 ./es5 ./out ./.next",
+    "our:compile": "npm run our:compile:edition-browsers && npm run our:compile:edition-es2022 && npm run our:compile:edition-es2022-esm && npm run our:compile:types",
+    "our:compile:edition-browsers": "tsc --module ESNext --target ES2022 --outDir ./edition-browsers --project tsconfig.json && ( test ! -d edition-browsers/source || ( mv edition-browsers/source edition-temp && rm -rf edition-browsers && mv edition-temp edition-browsers ) )",
+    "our:compile:edition-es2022": "tsc --module commonjs --target ES2022 --outDir ./edition-es2022 --project tsconfig.json && ( test ! -d edition-es2022/source || ( mv edition-es2022/source edition-temp && rm -rf edition-es2022 && mv edition-temp edition-es2022 ) ) && printf '%s' '{\"type\": \"commonjs\"}' > edition-es2022/package.json",
+    "our:compile:edition-es2022-esm": "tsc --module ESNext --target ES2022 --outDir ./edition-es2022-esm --project tsconfig.json && ( test ! -d edition-es2022-esm/source || ( mv edition-es2022-esm/source edition-temp && rm -rf edition-es2022-esm && mv edition-temp edition-es2022-esm ) ) && printf '%s' '{\"type\": \"module\"}' > edition-es2022-esm/package.json",
+    "our:compile:types": "tsc --project tsconfig.json --emitDeclarationOnly --declaration --declarationMap --declarationDir ./compiled-types && ( test ! -d compiled-types/source || ( mv compiled-types/source edition-temp && rm -rf compiled-types && mv edition-temp compiled-types ) )",
     "our:deploy": "printf '%s\n' 'no need for this project'",
     "our:meta": "npm run our:meta:contributors && npm run our:meta:docs && npm run our:meta:projectz",
     "our:meta:contributors": "update-contributors",
     "our:meta:docs": "npm run our:meta:docs:typedoc",
-    "our:meta:docs:typedoc": "rm -Rf ./docs && typedoc --exclude '**/+(*test*|node_modules)' --excludeExternals --out ./docs ./source",
+    "our:meta:docs:typedoc": "rm -rf ./docs && typedoc --exclude '**/+(*test*|node_modules)' --excludeExternals --out ./docs ./source",
     "our:meta:projectz": "projectz compile",
     "our:release": "npm run our:release:prepare && npm run our:release:check-changelog && npm run our:release:check-dirty && npm run our:release:tag && npm run our:release:push",
     "our:release:check-changelog": "cat ./HISTORY.md | grep \"v$npm_package_version\" || (printf '%s\n' \"add a changelog entry for v$npm_package_version\" && exit -1)",
@@ -165,9 +204,10 @@
     "our:setup": "npm run our:setup:install",
     "our:setup:install": "npm install",
     "our:test": "npm run our:verify && npm test",
-    "our:verify": "npm run our:verify:directory && npm run our:verify:eslint && npm run our:verify:prettier",
+    "our:verify": "npm run our:verify:directory && npm run our:verify:eslint && npm run our:verify:module && npm run our:verify:prettier",
     "our:verify:directory": "valid-directory",
     "our:verify:eslint": "eslint --fix --ignore-pattern '**/*.d.ts' --ignore-pattern '**/vendor/' --ignore-pattern '**/node_modules/' --ext .mjs,.js,.jsx,.ts,.tsx ./source",
+    "our:verify:module": "valid-module",
     "our:verify:prettier": "prettier --write .",
     "test": "node ./edition-es2022/test.js"
   },
@@ -178,20 +218,10 @@
   },
   "prettier": {
     "semi": false,
-    "singleQuote": true
+    "singleQuote": true,
+    "trailingComma": "es5"
   },
-  "contributors": [
-    "Benjamin Lupton <b@lupton.cc> (https://github.com/balupton)",
-    "Brandon Smith (https://github.com/brandon93s)",
-    "Christophe Hurpeau <christophe@hurpeau.com> (https://github.com/christophehurpeau)",
-    "Corey Farrell <git@cfware.com> (https://github.com/coreyfarrell)",
-    "Dimitri B. (https://github.com/BendingBender)",
-    "Jannis R <mail@jannisr.de> (https://github.com/derhuerst)",
-    "Kevin Goslar <kevin.goslar@gmail.com> (https://github.com/kevgo)",
-    "Richard Gibson (https://github.com/gibson042)",
-    "Richie Bendall <richiebendall@gmail.com> (https://github.com/Richienb)",
-    "Sam Verschueren (https://github.com/SamVerschueren)",
-    "Sindre Sorhus <sindresorhus@gmail.com> (https://github.com/sindresorhus)",
-    "ehmicky (https://github.com/ehmicky)"
-  ]
+  "boundation": {
+    "browser": true
+  }
 }
