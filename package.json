@@ -1,6 +1,6 @@
 {
   "name": "unicode-symbols",
-  "version": "7.5.0",
+  "version": "7.6.0",
   "license": "Artistic-2.0",
   "description": "Unicode Symbols",
   "homepage": "https://github.com/bevry/unicode-symbols",
@@ -244,12 +244,12 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.2",
     "kava": "^7.8.0",
-    "make-deno-edition": "^2.2.0",
+    "make-deno-edition": "^2.3.0",
     "prettier": "^3.1.1",
-    "projectz": "^4.1.1",
+    "projectz": "^4.2.0",
     "typedoc": "^0.25.4",
     "typescript": "5.3.3",
-    "valid-directory": "^4.8.0",
+    "valid-directory": "^4.9.0",
     "valid-module": "^2.6.0"
   },
   "scripts": {

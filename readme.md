@@ -50,27 +50,27 @@ Forked from [sindresorhus/figures](https://github.com/sindresorhus/figures)
 ### [Deno](https://deno.land "Deno is a secure runtime for JavaScript and TypeScript, it is an alternative for Node.js")
 
 ``` typescript
-import * as pkg from 'https://unpkg.com/unicode-symbols@^7.5.0/edition-deno/index.ts'
+import * as pkg from 'https://unpkg.com/unicode-symbols@^7.6.0/edition-deno/index.ts'
 ```
 ### [Skypack](https://www.skypack.dev "Skypack is a JavaScript Delivery Network for modern web apps")
 
 ``` html
 <script type="module">
-    import * as pkg from '//cdn.skypack.dev/unicode-symbols@^7.5.0'
+    import * as pkg from '//cdn.skypack.dev/unicode-symbols@^7.6.0'
 </script>
 ```
 ### [unpkg](https://unpkg.com "unpkg is a fast, global content delivery network for everything on npm")
 
 ``` html
 <script type="module">
-    import * as pkg from '//unpkg.com/unicode-symbols@^7.5.0'
+    import * as pkg from '//unpkg.com/unicode-symbols@^7.6.0'
 </script>
 ```
 ### [jspm](https://jspm.io "Native ES Modules CDN")
 
 ``` html
 <script type="module">
-    import * as pkg from '//dev.jspm.io/unicode-symbols@7.5.0'
+    import * as pkg from '//dev.jspm.io/unicode-symbols@7.6.0'
 </script>
 ```
 ### [Editions](https://editions.bevry.me "Editions are the best way to produce and consume packages you care about.")
